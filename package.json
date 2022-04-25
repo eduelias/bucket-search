@@ -1,0 +1,28 @@
+{
+  "name": "bucket-search",
+  "version": "0.0.1",
+  "description": "S3 bucket search tool",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "jest test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduelias/bucket-search.git"
+  },
+  "keywords": [
+    "AWS",
+    "S3",
+    "search",
+    "SQL"
+  ],
+  "author": "du7@msn.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eduelias/bucket-search/issues"
+  },
+  "homepage": "https://github.com/eduelias/bucket-search#readme",
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
+}
