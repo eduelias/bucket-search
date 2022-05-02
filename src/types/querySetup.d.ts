@@ -1,14 +1,10 @@
-import { jsonObjectMapper, listFilesConfig } from './listFilesConfig';
-import { selectObjectConfig, selectObjectItemMapper } from './selectObjectConfig';
+import { listFilesConfig } from './listFilesConfig';
+import { selectObjectConfig } from './selectObjectConfig';
 
-export abstract class querySetup<TQueryOutputType>
-  implements listFilesConfig<string>, selectObjectConfig<TQueryOutputType>
-{
+export abstract class querySetup implements listFilesConfig, selectObjectConfig {
   key: string;
   query: string;
   bucketName: string;
   prefix: string;
   maxKeys: number;
-  objectMapper: jsonObjectMapper<string>;
-  itemMapper: selectObjectItemMapper<TQueryOutputType>;
 }
