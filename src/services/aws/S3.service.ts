@@ -6,75 +6,73 @@ import {
   SelectObjectContentCommandInput,
   _Object,
 } from '@aws-sdk/client-s3';
-import { BaseProject } from '../../projects/BaseProject.project';
-import { selectObjectConfig } from '../../types/selectObjectConfig';
+
+import { queryConfig } from '../../types/queryConfig';
+import { SearchProject } from '../../types/searchProject';
 import { s3Client } from './S3.client'; // Helper function that creates an Amazon S3 service client module.
 
+const NOT_DEFINED = 'Not defined.';
 export class S3Service {
   /**
    *
    */
-  constructor(public project: BaseProject) {}
+  constructor(public project: SearchProject) {}
 
-  public async listFiles(): Promise<_Object[]> {
+  public async listObjects(): Promise<_Object[]> {
     // Create the parameters for the bucket
-    const bucketParams: ListObjectsCommandInput = this.project.configBuilder();
+    const bucketParams: ListObjectsCommandInput =
+      this.project.getListingConfig();
     // Declare truncated as a flag that the while loop is based on.
     let truncated = true;
-    // Declare a variable to which the key of the last element is assigned to in the response.
-    let pageMarker;
     // Initializing the output
     const contents: _Object[] = [];
     // while loop that runs until 'response.truncated' is false.
     while (truncated) {
+      const pageContent: _Object[] = [];
       try {
         const listObjectCommand = new ListObjectsCommand(bucketParams);
         const response = await s3Client.send(listObjectCommand);
 
         if (!response.Contents) {
+          console.log(
+            `Bucket ${bucketParams.Bucket || NOT_DEFINED} with prefix ${
+              bucketParams.Prefix || NOT_DEFINED
+            } has no content.`
+          );
           return [];
         }
 
-        response.Contents.filter((item) => this.project.filterListItems(item)).forEach((item) => {
+        for (const item of response.Contents.filter((item) =>
+          this.project.filterObjectList(item)
+        )) {
           contents.push(item);
-        });
+          pageContent.push(item);
+        }
 
         // Log the key of every item in the response to standard output.
         truncated = !!response.IsTruncated;
 
-        // If truncated is true, assign the key of the last element in the response to the pageMarker variable.
-        if (truncated) {
-          pageMarker = response.Contents.slice(-1)[0].Key;
-          // Assign the pageMarker value to bucketParams so that the next iteration starts from the new pageMarker.
-          bucketParams.Marker = pageMarker;
-        }
+        // Assign the pageMarker value to bucketParams so that the next iteration starts from the new pageMarker.
+        bucketParams.Marker = response.Contents.slice(-1)[0].Key;
+
+        await this.project.processObjectListPage(pageContent, bucketParams);
         // At end of the list, response.truncated is false, and the function exits the while loop.
       } catch (err) {
-        console.log('Error', err);
-        truncated = false;
+        console.error('Error', err);
+        continue;
       }
     }
+
+    this.project.endObjectListing(contents, bucketParams);
     return contents;
   }
 
-  public async queryContents({ bucketName, query, key }: selectObjectConfig): Promise<Uint8Array[]> {
-    const commandInput: SelectObjectContentCommandInput = {
-      Bucket: bucketName,
-      Key: key,
-      ExpressionType: 'SQL',
-      Expression: query,
-      InputSerialization: {
-        JSON: {
-          Type: 'LINES',
-        },
-        CompressionType: 'GZIP',
-      },
-      OutputSerialization: {
-        JSON: {},
-      },
-    };
-
-    const command: SelectObjectContentCommand = new SelectObjectContentCommand(commandInput);
+  public async queryContents(selectConfig: queryConfig): Promise<Uint8Array[]> {
+    const commandInput: SelectObjectContentCommandInput =
+      this.project.getAwsQueryConfig(selectConfig);
+    const command: SelectObjectContentCommand = new SelectObjectContentCommand(
+      commandInput
+    );
 
     const response = await s3Client.send(command);
     const records: Uint8Array[] = [];
@@ -86,21 +84,30 @@ export class S3Service {
         if (items?.Records) {
           if (items?.Records?.Payload) {
             records.push(items.Records.Payload);
+            if (
+              !this.project.processQueryPayload(
+                items.Records.Payload,
+                selectConfig
+              )
+            )
+              break;
           } else {
-            console.log('skipped event, payload: ', items?.Records?.Payload);
+            console.debug('skipped event, payload: ', items?.Records?.Payload);
           }
         } else if (items.Stats) {
-          console.log(`Processed ${items.Stats?.Details?.BytesProcessed || 'NaN'} bytes`);
+          this.project.processQueryStats(items, selectConfig);
         } else if (items.End) {
-          console.log('SelectObjectContent completed');
+          this.project.processQueryEnd(records, selectConfig);
         }
       } catch (err) {
         if (err instanceof TypeError) {
-          console.log('error in events: ', err);
+          console.error('error in events: ', err);
           throw err;
         }
       }
     }
+
+    this.project.processQueryResults(records, selectConfig);
 
     return records;
   }
