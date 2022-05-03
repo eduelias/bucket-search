@@ -1,7 +1,7 @@
 {
-  "name": "bucket-search",
-  "version": "0.0.1",
-  "description": "S3 bucket search tool",
+  "name": "@eduelias/bucket-search",
+  "version": "0.0.3",
+  "description": "AWSs S3 bucket querying tool",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
