@@ -1,7 +1,6 @@
-import { ListObjectsCommandInput } from '@aws-sdk/client-s3';
-import { DefaultProject } from '../types/defaultProject';
+import { DefaultProject } from '../types';
 
-export class SimpleSearch extends DefaultProject {
+export class SimpleSearchProject extends DefaultProject {
   public query = 'SELECT * FROM S3Object d';
   public bucketPrefix = 'here/goes/bucket/prefix';
   public bucket = 'here-goes-bucket-name';

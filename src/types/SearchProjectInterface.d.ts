@@ -4,9 +4,9 @@ import {
   SelectObjectContentEventStream,
   _Object,
 } from '@aws-sdk/client-s3';
-import { queryConfig } from './queryConfig';
+import { QueryConfigInterface } from './QueryConfigInterface';
 
-declare interface SearchProject {
+declare interface SearchProjectInterface {
   // Project Methods -------------------------------------------------------------
   query: string;
   bucket: string;
@@ -33,16 +33,22 @@ declare interface SearchProject {
 
   // Query Methods ----------------------------------------------------------------
   getAwsQueryConfig(
-    selectObjectConfig: queryConfig
+    selectObjectConfig: QueryConfigInterface
   ): SelectObjectContentCommandInput;
 
   processQueryStats(
     items: SelectObjectContentEventStream.StatsMember,
-    selectConfig: queryConfig
+    selectConfig: QueryConfigInterface
   ): void;
-  processQueryPayload(Payload: Uint8Array, config: queryConfig): boolean;
-  processQueryEnd(records: Uint8Array[], config: queryConfig): void;
-  processQueryResults(records: Uint8Array[], selectConfig: queryConfig): void;
+  processQueryPayload(
+    Payload: Uint8Array,
+    config: QueryConfigInterface
+  ): boolean;
+  processQueryEnd(records: Uint8Array[], config: QueryConfigInterface): void;
+  processQueryResults(
+    records: Uint8Array[],
+    selectConfig: QueryConfigInterface
+  ): void;
 
   // Terminate Methods -----------------------------
   onTerminate(): void;

@@ -7,8 +7,8 @@ import {
   _Object,
 } from '@aws-sdk/client-s3';
 
-import { queryConfig } from '../../types/queryConfig';
-import { SearchProject } from '../../types/searchProject';
+import { QueryConfigInterface } from '../../types/QueryConfigInterface';
+import { SearchProjectInterface } from '../../types/SearchProjectInterface';
 import { s3Client } from './S3.client'; // Helper function that creates an Amazon S3 service client module.
 
 const NOT_DEFINED = 'Not defined.';
@@ -16,7 +16,7 @@ export class S3Service {
   /**
    *
    */
-  constructor(public project: SearchProject) {}
+  constructor(public project: SearchProjectInterface) {}
 
   public async listObjects(): Promise<_Object[]> {
     // Create the parameters for the bucket
@@ -67,7 +67,9 @@ export class S3Service {
     return contents;
   }
 
-  public async queryContents(selectConfig: queryConfig): Promise<Uint8Array[]> {
+  public async queryContents(
+    selectConfig: QueryConfigInterface
+  ): Promise<Uint8Array[]> {
     const commandInput: SelectObjectContentCommandInput =
       this.project.getAwsQueryConfig(selectConfig);
     const command: SelectObjectContentCommand = new SelectObjectContentCommand(

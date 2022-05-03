@@ -2,7 +2,8 @@
   "name": "bucket-search",
   "version": "0.0.1",
   "description": "S3 bucket search tool",
-  "main": "build/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "lint": "pnpx prettier --config .prettierrc 'src/**/*.ts' --write",
     "test": "jest test"

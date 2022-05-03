@@ -6,10 +6,10 @@ import {
   SelectObjectContentEventStream,
 } from '@aws-sdk/client-s3';
 import { S3Service } from '../services/aws/S3.service';
-import { queryConfig } from './queryConfig';
-import { SearchProject } from './searchProject';
+import { QueryConfigInterface } from './QueryConfigInterface';
+import { SearchProjectInterface } from './SearchProjectInterface';
 
-export abstract class DefaultProject implements SearchProject {
+export abstract class DefaultProject implements SearchProjectInterface {
   protected S3Service: S3Service = new S3Service(this);
   protected results: Array<[string, Uint8Array]> = [];
   /**
@@ -80,7 +80,7 @@ export abstract class DefaultProject implements SearchProject {
     bucket,
     key,
     query,
-  }: queryConfig): SelectObjectContentCommandInput {
+  }: QueryConfigInterface): SelectObjectContentCommandInput {
     return {
       Bucket: bucket,
       Key: key,
@@ -100,20 +100,26 @@ export abstract class DefaultProject implements SearchProject {
 
   processQueryStats(
     items: SelectObjectContentEventStream.StatsMember,
-    selectConfig: queryConfig
+    selectConfig: QueryConfigInterface
   ): void {
     // do nothing
   }
 
-  processQueryPayload(Payload: Uint8Array, config: queryConfig): boolean {
+  processQueryPayload(
+    Payload: Uint8Array,
+    config: QueryConfigInterface
+  ): boolean {
     return false;
   }
 
-  processQueryEnd(records: Uint8Array[], config: queryConfig): void {
+  processQueryEnd(records: Uint8Array[], config: QueryConfigInterface): void {
     // do nothing
   }
 
-  processQueryResults(records: Uint8Array[], selectConfig: queryConfig): void {
+  processQueryResults(
+    records: Uint8Array[],
+    selectConfig: QueryConfigInterface
+  ): void {
     // do nothing
   }
 
