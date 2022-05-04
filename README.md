@@ -12,6 +12,6 @@ This package helps scrapping S3 buckets using it's SQL capabilities to go throug
 5. Call method `.run()`
 
 ## Examples
-To see some examples, look for the folder examples. There we have a simple sequential query runner that will list all files in the bucket and query each one sequentially and log to console when any record is found.
+To see some examples, look for the folder examples. There we have a simple sequential query runner that will list all files in the bucket and query each one sequentially and log to console when any records are found.
 
 [^1]: To be able to query the S3 bucket you configured on your project, you need to have AWS credentials file set up and the correct credentials on your environment. 
