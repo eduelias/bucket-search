@@ -134,5 +134,6 @@ tsdoc-metadata.json
 *.ignore.*
 
 # npm only
-src/*
+src/
+build/
 .vscode

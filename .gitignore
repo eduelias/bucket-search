@@ -133,3 +133,5 @@ tsdoc-metadata.json
 
 # marked as ignore
 *.ignore.*
+
+build/

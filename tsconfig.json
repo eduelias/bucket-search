@@ -4,7 +4,7 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "outDir": "dist",
+    "outDir": "build",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
