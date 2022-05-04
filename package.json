@@ -1,9 +1,9 @@
 {
   "name": "@eduelias/bucket-search",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "AWSs S3 bucket querying tool",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/@types/index.d.ts",
   "scripts": {
     "lint": "pnpx prettier --config .prettierrc 'src/**/*.ts' --write",
     "test": "jest test"
