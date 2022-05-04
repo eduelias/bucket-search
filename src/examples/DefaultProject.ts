@@ -5,9 +5,8 @@ import {
   SelectObjectContentCommandInput,
   SelectObjectContentEventStream,
 } from '@aws-sdk/client-s3';
+import { QueryConfigInterface, SearchProjectInterface } from '../interfaces';
 import { S3Service } from '../services/aws/S3.service';
-import { QueryConfigInterface } from './QueryConfigInterface';
-import { SearchProjectInterface } from './SearchProjectInterface';
 
 export abstract class DefaultProject implements SearchProjectInterface {
   protected S3Service: S3Service = new S3Service(this);

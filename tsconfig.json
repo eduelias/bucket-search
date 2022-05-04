@@ -3,18 +3,16 @@
 
   "compilerOptions": {
     "noImplicitAny": true,
+    "moduleResolution": "node",
     "outDir": "dist",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
-    "sourceMap": true,
-    "declarationMap": true,
-    "inlineSources": true,
-    "experimentalDecorators": true,
+    "declarationDir": "dist/@types",
     "strict": true,
     "useUnknownInCatchVariables": false,
     "esModuleInterop": true,
-    "noEmitOnError": false,
+    "noEmitOnError": true,
     "resolveJsonModule": true,
     "types": [],
 
@@ -22,5 +20,5 @@
     "target": "es2017",
     "lib": ["dom", "es2017"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": ["src/**/*.ts"]
 }

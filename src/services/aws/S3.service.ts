@@ -7,8 +7,8 @@ import {
   _Object,
 } from '@aws-sdk/client-s3';
 
-import { QueryConfigInterface } from '../../types/QueryConfigInterface';
-import { SearchProjectInterface } from '../../types/SearchProjectInterface';
+import { QueryConfigInterface } from '../../interfaces/QueryConfigInterface';
+import { SearchProjectInterface } from '../../interfaces/SearchProjectInterface';
 import { s3Client } from './S3.client'; // Helper function that creates an Amazon S3 service client module.
 
 const NOT_DEFINED = 'Not defined.';

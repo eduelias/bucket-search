@@ -6,7 +6,7 @@ import {
 } from '@aws-sdk/client-s3';
 import { QueryConfigInterface } from './QueryConfigInterface';
 
-declare interface SearchProjectInterface {
+export declare interface SearchProjectInterface {
   // Project Methods -------------------------------------------------------------
   query: string;
   bucket: string;

@@ -1,4 +1,4 @@
-import { DefaultProject } from '../types';
+import { DefaultProject } from '.';
 
 export class SimpleSearchProject extends DefaultProject {
   public query = 'SELECT * FROM S3Object d';
@@ -11,7 +11,7 @@ export class SimpleSearchProject extends DefaultProject {
       const found = await this.S3Service.queryContents({
         bucket: this.getBucket(),
         bucketPrefix: this.getBucketPrefix(),
-        key: file.Key!,
+        key: file.Key as string,
         query: this.getQuery(),
       });
       if (!found) return;
