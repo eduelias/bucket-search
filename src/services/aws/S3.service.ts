@@ -2,8 +2,10 @@
 import {
   ListObjectsCommand,
   ListObjectsCommandInput,
+  S3ServiceException,
   SelectObjectContentCommand,
   SelectObjectContentCommandInput,
+  SelectObjectContentCommandOutput,
   _Object,
 } from '@aws-sdk/client-s3';
 import { QueryConfigInterface } from '../../interfaces/QueryConfigInterface';
@@ -64,19 +66,39 @@ export class S3Service {
     }
 
     this.project.endObjectListing(contents, bucketParams);
+
     return contents;
   }
 
   public async queryContents(
-    selectConfig: QueryConfigInterface
+    queryConfig: QueryConfigInterface
   ): Promise<Uint8Array[]> {
     const commandInput: SelectObjectContentCommandInput =
-      this.project.getAwsQueryConfig(selectConfig);
+      this.project.getAwsQueryConfig(queryConfig);
     const command: SelectObjectContentCommand = new SelectObjectContentCommand(
       commandInput
     );
 
-    const response = await s3Client.send(command);
+    let response: SelectObjectContentCommandOutput;
+    try {
+      response = await s3Client.send(command);
+    } catch (err) {
+      if (err instanceof S3ServiceException) {
+        const error = err as unknown as {
+          Key: string;
+          Code: string;
+        };
+        if (error && !!error.Code && error.Key && error.Code === 'NoSuchKey') {
+          console.log(`The item ${error.Key}, was not found on the bucket.`);
+        }
+      } else {
+        throw err;
+      }
+    }
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (response === undefined) return [];
+
     const records: Uint8Array[] = [];
 
     if (!response.Payload) return records;
@@ -89,7 +111,7 @@ export class S3Service {
             if (
               !this.project.processQueryPayload(
                 items.Records.Payload,
-                selectConfig
+                queryConfig
               )
             )
               break;
@@ -97,9 +119,9 @@ export class S3Service {
             console.debug('skipped event, payload: ', items?.Records?.Payload);
           }
         } else if (items.Stats) {
-          this.project.processQueryStats(items, selectConfig);
+          this.project.processQueryStats(items, queryConfig);
         } else if (items.End) {
-          this.project.processQueryEnd(records, selectConfig);
+          this.project.processQueryEnd(records, queryConfig);
         }
       } catch (err) {
         if (err instanceof TypeError) {
@@ -109,7 +131,7 @@ export class S3Service {
       }
     }
 
-    this.project.processQueryResults(records, selectConfig);
+    this.project.processQueryResults(records, queryConfig);
 
     return records;
   }
