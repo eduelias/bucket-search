@@ -135,3 +135,4 @@ tsdoc-metadata.json
 *.ignore.*
 
 build/
+lib*

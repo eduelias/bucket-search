@@ -4,12 +4,13 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "outDir": "dist",
+    "outDir": "lib",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "declarationDir": "dist/@types",
     "strict": true,
+    "sourceMap": true,
     "useUnknownInCatchVariables": false,
     "esModuleInterop": true,
     "noEmitOnError": true,
@@ -17,8 +18,8 @@
     "types": [],
 
     "module": "commonjs",
-    "target": "es2017",
-    "lib": ["dom", "es2017"]
+    "target": "es5",
+    "lib": ["dom", "es2015"]
   },
   "include": ["src/**/*.ts"]
 }
