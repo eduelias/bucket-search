@@ -4,6 +4,7 @@ import {
   _Object,
   SelectObjectContentCommandInput,
   SelectObjectContentEventStream,
+  S3ClientConfig,
 } from '@aws-sdk/client-s3';
 import { QueryConfigInterface, SearchProjectInterface } from '../interfaces';
 import { S3Service } from '../services/aws/S3.service';
@@ -19,6 +20,11 @@ export abstract class DefaultProject implements SearchProjectInterface {
       this.onTerminate();
       process.exit();
     });
+  }
+  getClientConfig(): S3ClientConfig {
+    return {
+      region: process.env.AWS_REGION || 'us-east-1',
+    };
   }
   public abstract query: string;
   public abstract bucketPrefix: string;
