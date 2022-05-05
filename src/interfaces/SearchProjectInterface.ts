@@ -1,5 +1,6 @@
 import {
   ListObjectsCommandInput,
+  S3ClientConfig,
   SelectObjectContentCommandInput,
   SelectObjectContentEventStream,
   _Object,
@@ -16,6 +17,7 @@ export declare interface SearchProjectInterface {
 
   getBucket(): string;
   getBucketPrefix(): string;
+  getClientConfig(): S3ClientConfig;
   getQuery(): string;
   getMarker(): string | undefined;
 

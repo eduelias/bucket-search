@@ -2,6 +2,7 @@
 import {
   ListObjectsCommand,
   ListObjectsCommandInput,
+  S3Client,
   SelectObjectContentCommand,
   SelectObjectContentCommandInput,
   _Object,
@@ -9,19 +10,23 @@ import {
 import { QueryConfigInterface } from '../../interfaces/QueryConfigInterface';
 import { SearchProjectInterface } from '../../interfaces/SearchProjectInterface';
 
-import { s3Client } from './S3.client'; // Helper function that creates an Amazon S3 service client module.
-
 const NOT_DEFINED = 'Not defined.';
 export class S3Service {
+  s3Client: S3Client;
   /**
    *
    */
-  constructor(public project: SearchProjectInterface) {}
+  constructor(public project: SearchProjectInterface) {
+    const config = project.getClientConfig();
+    // Create an Amazon S3 service client object.
+    this.s3Client = new S3Client(config);
+  }
 
   public async listObjects(): Promise<_Object[]> {
     // Create the parameters for the bucket
     const bucketParams: ListObjectsCommandInput =
       this.project.getListingConfig();
+
     // Declare truncated as a flag that the while loop is based on.
     let truncated = true;
     // Initializing the output
@@ -31,7 +36,7 @@ export class S3Service {
       const pageContent: _Object[] = [];
       try {
         const listObjectCommand = new ListObjectsCommand(bucketParams);
-        const response = await s3Client.send(listObjectCommand);
+        const response = await this.s3Client.send(listObjectCommand);
 
         if (!response.Contents) {
           console.log(
@@ -76,7 +81,7 @@ export class S3Service {
       commandInput
     );
 
-    const response = await s3Client.send(command);
+    const response = await this.s3Client.send(command);
     const records: Uint8Array[] = [];
 
     if (!response.Payload) return records;
