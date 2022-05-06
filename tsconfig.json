@@ -16,6 +16,8 @@
     "noEmitOnError": true,
     "resolveJsonModule": true,
     "types": [],
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
 
     "module": "commonjs",
     "target": "es5",

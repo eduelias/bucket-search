@@ -213,4 +213,9 @@ Procfile
 
 
 # Files
-
+.prettierignore
+.lintstagedrc
+.nvmrc
+.huskyrc
+.prettierrc
+*.config.js

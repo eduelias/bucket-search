@@ -1,6 +1,6 @@
-import { S3Service } from './services/aws/S3.service';
+import { BucketSearch } from './lib/commands/BucketSearch';
 import { QueryConfigInterface } from './interfaces';
-import { DefaultProject, SimpleSearchProject } from './examples';
+import { DefaultProject, SimpleSearchProject } from './projects';
 import {
   ListObjectsCommandInput,
   S3ClientConfig,
@@ -8,7 +8,7 @@ import {
 } from '@aws-sdk/client-s3';
 
 export {
-  S3Service,
+  BucketSearch as S3Service,
   SimpleSearchProject,
   DefaultProject,
   QueryConfigInterface,
