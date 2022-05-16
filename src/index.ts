@@ -1,4 +1,4 @@
-import { BucketSearch } from './lib/commands/BucketSearch';
+import { BucketSearch } from './aws/commands/BucketSearch';
 import { QueryConfigInterface } from './interfaces';
 import { DefaultProject, SimpleSearchProject } from './projects';
 import {

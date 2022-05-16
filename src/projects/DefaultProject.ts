@@ -7,7 +7,7 @@ import {
   S3ClientConfig,
 } from '@aws-sdk/client-s3';
 import { QueryConfigInterface, SearchProjectInterface } from '../interfaces';
-import { BucketSearch } from '../lib/commands/BucketSearch';
+import { BucketSearch } from '../aws/commands/BucketSearch';
 
 export abstract class DefaultProject implements SearchProjectInterface {
   protected S3Service: BucketSearch = new BucketSearch(this);
