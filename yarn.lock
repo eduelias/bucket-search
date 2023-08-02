@@ -1866,9 +1866,9 @@ pidtree@^0.5.0:
   integrity sha512-9nxspIM7OpZuhBxPg73Zvyq7j1QMPMPsGKTqRc2XOaFQauDvoNz9fM1Wdkjmeo7l9GXOZiRs97sPkuayl39wjA==
 
 pnpm@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/pnpm/-/pnpm-7.0.0.tgz#5759c264fa75d2448cb25e0e538ec98c1be4df37"
-  integrity sha512-5njVSmE/Sz6coyikS6gjwoKWaxxsJ6BY6jL1aqwvnEpNUfFednbHqid3aZ42JszOFaSOz3Qipcfp4ei22G/JEg==
+  version "7.33.4"
+  resolved "https://registry.yarnpkg.com/pnpm/-/pnpm-7.33.4.tgz#b8e84bbad4c674b8582b7f01d22fb28c34e2de7c"
+  integrity sha512-xEbf/tkwHpGM/GXq5U/sDSiE6ykLPho+o71PHNRWqkVLm6dJe4G/5Pg619Ow32ovekrr7pii5qtfamujB/+1bA==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
