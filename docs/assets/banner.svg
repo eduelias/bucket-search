@@ -1,0 +1,47 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="bucket-search promotional banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A0E0C"/>
+      <stop offset="0.55" stop-color="#0D1712"/>
+      <stop offset="1" stop-color="#16281F"/>
+    </linearGradient>
+    <style>
+      .kicker { font: 700 22px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #4ADE80; letter-spacing: 4px; }
+      .title  { font: 700 72px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #FFFFFF; }
+      .sub    { font: 600 32px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #CFE3D8; }
+      .bullet { font: 400 26px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #E8F0EB; }
+      .footl  { font: 700 22px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #8FAE9E; }
+      .footr  { font: 400 22px 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; fill: #7E8F87; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <text class="kicker" x="56" y="80">TYPESCRIPT · NPM PACKAGE</text>
+
+  <!-- decorative bucket + magnifier top-right -->
+  <g transform="translate(970,40)" stroke="#4ADE80" stroke-width="2.5" fill="none">
+    <path d="M10 10 h110 l-14 74 h-82 z" stroke-linejoin="round"/>
+    <path d="M28 28 h74 M34 46 h62" stroke-opacity="0.45"/>
+    <circle cx="138" cy="78" r="26"/>
+    <path d="M157 97 l22 22" stroke-linecap="round"/>
+  </g>
+
+  <text class="title" x="52" y="165">bucket-search</text>
+
+  <text class="sub" x="56" y="225">Query entire S3 buckets with SQL —</text>
+  <text class="sub" x="56" y="268">every object, sequentially or all at once.</text>
+
+  <g fill="#4ADE80">
+    <circle cx="66" cy="352" r="7"/>
+    <circle cx="66" cy="406" r="7"/>
+    <circle cx="66" cy="460" r="7"/>
+  </g>
+  <text class="bullet" x="92" y="361">S3 Select under the hood — SQL over every file in a bucket</text>
+  <text class="bullet" x="92" y="415">Sequential or simultaneous runs — you pick the throughput</text>
+  <text class="bullet" x="92" y="469">Extend one class, call .run() — on npm as @eduelias/bucket-search</text>
+
+  <line x1="56" y1="540" x2="1144" y2="540" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="2"/>
+  <text class="footl" x="56" y="588">npm i @eduelias/bucket-search</text>
+  <text class="footr" x="1144" y="588" text-anchor="end">MIT · AWS S3 · TypeScript</text>
+</svg>
