@@ -13,6 +13,7 @@ import { QueryConfigInterface } from '../../interfaces/QueryConfigInterface';
 import { SearchProjectInterface } from '../../interfaces/SearchProjectInterface';
 
 const NOT_DEFINED = 'Not defined.';
+const MAX_LIST_RETRIES = 3;
 export class S3Service {
   s3Client: S3Client;
   /**
@@ -33,14 +34,17 @@ export class S3Service {
     let truncated = true;
     // Initializing the output
     const contents: _Object[] = [];
+    // Counts consecutive failures so a persistent error can't loop forever.
+    let attempts = 0;
     // while loop that runs until 'response.truncated' is false.
     while (truncated) {
       const pageContent: _Object[] = [];
       try {
         const listObjectCommand = new ListObjectsCommand(bucketParams);
         const response = await this.s3Client.send(listObjectCommand);
+        attempts = 0;
 
-        if (!response.Contents) {
+        if (!response.Contents || response.Contents.length === 0) {
           console.log(
             `Bucket ${bucketParams.Bucket || NOT_DEFINED} with prefix ${
               bucketParams.Prefix || NOT_DEFINED
@@ -66,6 +70,8 @@ export class S3Service {
         // At end of the list, response.truncated is false, and the function exits the while loop.
       } catch (err) {
         console.error('Error', err);
+        attempts += 1;
+        if (attempts >= MAX_LIST_RETRIES) throw err;
         continue;
       }
     }
