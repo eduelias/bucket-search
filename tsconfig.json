@@ -14,7 +14,7 @@
     "esModuleInterop": true,
     "noEmitOnError": true,
     "resolveJsonModule": true,
-    "types": [],
+    "types": ["node"],
 
     "module": "commonjs",
     "target": "es2017",
